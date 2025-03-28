@@ -4,7 +4,6 @@ set hive.exec.mode.local.auto=true;
 -------------------------ods层建表-----------------------
 
 
-show functions ;
 ----------------日志-----------------
 drop table if exists ods_log;
 CREATE EXTERNAL TABLE ods_log (`line` string)
@@ -340,7 +339,7 @@ load data inpath "/offiline_data/gmall/ods/order_detail/2025-03-24" into table o
 load data inpath "/offiline_data/gmall/ods/order_detail/2025-03-23" into table ods_order_detail partition (dt="2025-03-23");
 
 -- 16 订单表
-DROP TABLE IF EXISTS ods_order_info;
+DROP TABLE  ods_order_info;
 CREATE EXTERNAL TABLE ods_order_info (
     `id` STRING COMMENT '订单号',
     `final_amount` DECIMAL(16,2) COMMENT '订单最终金额',
@@ -480,7 +479,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 ;
 
 
-
+describe ods_log;
 load data inpath "/offiline_data/gmall/ods/spu_info/2025-03-25" into table ods_spu_info partition (dt="2025-03-25");
 load data inpath "/offiline_data/gmall/ods/spu_info/2025-03-24" into table ods_spu_info partition (dt="2025-03-24");
 load data inpath "/offiline_data/gmall/ods/spu_info/2025-03-23" into table ods_spu_info partition (dt="2025-03-23");
@@ -513,3 +512,4 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 load data inpath "/offiline_data/gmall/ods/user_info/2025-03-25" into table ods_user_info partition (dt="2025-03-25");
 load data inpath "/offiline_data/gmall/ods/user_info/2025-03-24" into table ods_user_info partition (dt="2025-03-24");
 load data inpath "/offiline_data/gmall/ods/user_info/2025-03-23" into table ods_user_info partition (dt="2025-03-23");
+describe ods_user_info;

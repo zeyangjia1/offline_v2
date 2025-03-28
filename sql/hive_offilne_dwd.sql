@@ -1,7 +1,7 @@
 use offilne;
 set hive.exec.mode.local.auto=true;
 
-
+--
 drop function split_log;
 
 create function split_log as 'log_split_and_Interceptor.split_log'
@@ -32,7 +32,7 @@ PARTITIONED BY (`dt` STRING) -- 按照时间创建分区
     stored as textfile
     LOCATION '/warehouse/gmall/dwd/dwd_start_log/'
     tblproperties ("textfile.Compression=gzip");
-
+describe dwd_start_log;
 insert  overwrite  table dwd_start_log partition (dt="2025-03-23")
 select
     get_json_object(line,'$.common.ar'),
@@ -120,7 +120,7 @@ PARTITIONED BY (`dt` STRING)
     stored as textfile
     LOCATION '/warehouse/gmall/dwd/dwd_page_log/'
     tblproperties ("textfile.Compression=gzip");
-
+describe dwd_page_log;
 insert  overwrite  table dwd_page_log partition (dt="2025-03-23")
 select
     get_json_object(line,'$.common.ar'),
@@ -445,6 +445,7 @@ PARTITIONED BY (`dt` STRING)
     tblproperties ("textfile.Compression=gzip");
 
 
+describe dwd_error_log;
 
 insert overwrite table dwd_error_log partition(dt='2025-03-23')
 select
@@ -553,6 +554,11 @@ PARTITIONED BY (`dt` STRING)
     LOCATION '/warehouse/gmall/dwd/dwd_comment_info/'
     tblproperties ("textfile.Compression=gzip");
 
+describe dwd_comment_info;
+
+
+
+
 select * from dwd_comment_info dci
                   join dwd_order_info  doi
                        on dci.order_id=doi.id;
@@ -603,6 +609,10 @@ PARTITIONED BY (`dt` STRING)
     stored as textfile
     LOCATION '/warehouse/gmall/dwd/dwd_order_detail/'
     tblproperties ("textfile.Compression=gzip");
+describe dwd_order_detail;
+
+
+
 insert overwrite table dwd_order_detail partition (dt='2025-03-23')
 select
     ood.id,
@@ -644,7 +654,7 @@ where ooi.dt='2025-03-25';
 
 
 
-
+drop table dwd_order_info;
 CREATE EXTERNAL TABLE dwd_order_info (
                                          `id` STRING COMMENT '订单号',
                                          `final_amount` DECIMAL(16,2) COMMENT '订单最终金额',
@@ -734,7 +744,7 @@ from  ods_order_info where dt='2025-03-25';
 
 
 
-
+drop table dwd_sku_info;
 CREATE EXTERNAL TABLE dwd_sku_info(
                                       `id` STRING COMMENT 'skuId',
                                       `spu_id` STRING COMMENT 'spuid',
@@ -779,6 +789,8 @@ select
     `is_sale` ,
     `create_time`
 from ods_sku_info where dt='2025-03-24';
+describe dwd_page_log;
+
 insert overwrite table dwd_sku_info partition (dt='2025-03-25')
 select
     `id` ,
@@ -794,7 +806,7 @@ select
 from ods_sku_info where dt='2025-03-25';
 
 
-
+drop table dwd_user_info;
 CREATE EXTERNAL TABLE dwd_user_info(
                                        `id` STRING COMMENT '用户id',
                                        `login_name` STRING COMMENT '用户名称',
@@ -813,7 +825,7 @@ CREATE EXTERNAL TABLE dwd_user_info(
     stored as textfile
     LOCATION '/warehouse/gmall/dwd/dwd_user_info/'
     tblproperties ("textfile.Compression=gzip");
-
+describe dwd_user_info;
 
 insert overwrite table dwd_user_info partition (dt='2025-03-23')
 select
@@ -857,3 +869,4 @@ select
     `create_time` ,
     `operate_time`
 from ods_user_info where dt='2025-03-25';
+describe ods_user_info;

@@ -16,7 +16,8 @@ create external table  dwt_Grand_summary_1(
     stored as textfile
     LOCATION '/warehouse/gmall/dwt/dwt_Grand_summary_1/'
     tblproperties ("textfile.Compression=gzip");
-
+describe dwt_Grand_summary_1;
+SELECT * from dwt_Grand_summary_1;
 
 insert into table dwt_Grand_summary_1
 select
