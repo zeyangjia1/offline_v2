@@ -1,5 +1,7 @@
-use  offilne;
-set hive.exec.mode.local.auto=true;
+use
+offilne;
+set
+hive.exec.mode.local.auto=true;
 
 drop table dwt_Grand_summary_1;
 create external table  dwt_Grand_summary_1(
@@ -17,27 +19,28 @@ create external table  dwt_Grand_summary_1(
     LOCATION '/warehouse/gmall/dwt/dwt_Grand_summary_1/'
     tblproperties ("textfile.Compression=gzip");
 describe dwt_Grand_summary_1;
-SELECT * from dwt_Grand_summary_1;
+SELECT *
+from dwt_Grand_summary_1;
 
 insert into table dwt_Grand_summary_1
-select
-    ooi.user_id,
-    ood.sku_id,
-    odi.tm_id,
-    ood.sku_num,
-    ooi.dt,
-    oci.appraise,
-    ooi.order_status,
-    ooi.province_id
+select ooi.user_id,
+       ood.sku_id,
+       odi.tm_id,
+       ood.sku_num,
+       ooi.dt,
+       oci.appraise,
+       ooi.order_status,
+       ooi.province_id
 from ods_order_info ooi
-         join ods_order_detail ood  on ooi.id=ood.order_id
-         join ods_sku_info odi on ood.sku_id=odi.id
-         join ods_comment_info oci on oci.order_id=ooi.id;
+         join ods_order_detail ood on ooi.id = ood.order_id
+         join ods_sku_info odi on ood.sku_id = odi.id
+         join ods_comment_info oci on oci.order_id = ooi.id;
 
 drop table dwt_page_log;
-CREATE EXTERNAL TABLE dwt_page_log(
+CREATE
+EXTERNAL TABLE dwt_page_log(
                                       `area_code` STRING COMMENT '地区编码',
-                                      `brand` STRING COMMENT '手机品牌',
+                                       `brand` STRING COMMENT '手机品牌',
                                       `channel` STRING COMMENT '渠道',
                                       `is_new` STRING COMMENT '是否首次启动',
                                       `model` STRING COMMENT '手机型号',
@@ -58,4 +61,5 @@ CREATE EXTERNAL TABLE dwt_page_log(
     LOCATION '/warehouse/gmall/dwt/dwt_page_log/'
     tblproperties ("textfile.Compression=gzip");
 insert into table dwt_page_log
-select * from dwd_page_log;
+select *
+from dwd_page_log;

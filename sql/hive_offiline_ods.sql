@@ -1,12 +1,15 @@
-use  offilne;
-set hive.exec.mode.local.auto=true;
+use
+offilne;
+set
+hive.exec.mode.local.auto=true;
 
 -------------------------ods层建表-----------------------
 
 
 ----------------日志-----------------
 drop table if exists ods_log;
-CREATE EXTERNAL TABLE ods_log (`line` string)
+CREATE
+EXTERNAL TABLE ods_log (`line` string)
 
 PARTITIONED BY (`dt` string) -- 按照时间创建分区
 
@@ -15,14 +18,19 @@ stored as textfile
 tblproperties ("textfile.Compression=gzip");
 
   -- 指定数据在hdfs上的存储位置;
-load data inpath "/offiline_data/gmall/ods/logs/2025-03-23" into table ods_log partition (dt="2025-03-23");
-load data inpath "/offiline_data/gmall/ods/logs/2025-03-24" into table ods_log partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/logs/2025-03-25" into table ods_log partition (dt="2025-03-25");
-select * from ods_log;
+load
+data inpath "/offiline_data/gmall/ods/logs/2025-03-23" into table ods_log partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/logs/2025-03-24" into table ods_log partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/logs/2025-03-25" into table ods_log partition (dt="2025-03-25");
+select *
+from ods_log;
 ----------------业务-----------------
 -- 1 活动信息表
 DROP TABLE IF EXISTS ods_activity_info;
-CREATE EXTERNAL TABLE ods_activity_info(
+CREATE
+EXTERNAL TABLE ods_activity_info(
     `id` STRING COMMENT '编号',
     `activity_name` STRING  COMMENT '活动名称',
     `activity_type` STRING  COMMENT '活动类型',
@@ -36,12 +44,16 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     LOCATION '/warehouse/gmall/ods/ods_activity_info/'
     tblproperties ("textfile.Compression=gzip");
 
-load data inpath "/offiline_data/gmall/ods/activity_info/2025-03-25" into table ods_activity_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/activity_info/2025-03-24" into table ods_activity_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/activity_info/2025-03-23" into table ods_activity_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/activity_info/2025-03-25" into table ods_activity_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/activity_info/2025-03-24" into table ods_activity_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/activity_info/2025-03-23" into table ods_activity_info partition (dt="2025-03-23");
 
 DROP TABLE IF EXISTS ods_activity_rule;
-CREATE EXTERNAL TABLE ods_activity_rule(
+CREATE
+EXTERNAL TABLE ods_activity_rule(
     `id` STRING COMMENT '编号',
     `activity_id` STRING  COMMENT '活动ID',
     `activity_type` STRING COMMENT '活动类型',
@@ -57,13 +69,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     LOCATION '/warehouse/gmall/ods/ods_activity_rule/'
     tblproperties ("textfile.Compression=gzip")
 ;
-load data inpath "/offiline_data/gmall/ods/activity_rule/2025-03-25" into table ods_activity_rule partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/activity_rule/2025-03-24" into table ods_activity_rule partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/activity_rule/2025-03-23" into table ods_activity_rule partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/activity_rule/2025-03-25" into table ods_activity_rule partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/activity_rule/2025-03-24" into table ods_activity_rule partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/activity_rule/2025-03-23" into table ods_activity_rule partition (dt="2025-03-23");
 
 -- 3 一级品类表
 DROP TABLE IF EXISTS ods_base_category1;
-CREATE EXTERNAL TABLE ods_base_category1(
+CREATE
+EXTERNAL TABLE ods_base_category1(
     `id` STRING COMMENT 'id',
     `name` STRING COMMENT '名称'
 ) COMMENT '商品一级分类表'
@@ -76,13 +92,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 
 
 
-load data inpath "/offiline_data/gmall/ods/base_category1/2025-03-25" into table ods_base_category1 partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/base_category1/2025-03-24" into table ods_base_category1 partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/base_category1/2025-03-23" into table ods_base_category1 partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/base_category1/2025-03-25" into table ods_base_category1 partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/base_category1/2025-03-24" into table ods_base_category1 partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/base_category1/2025-03-23" into table ods_base_category1 partition (dt="2025-03-23");
 
 -- 4 二级品类表
 DROP TABLE IF EXISTS ods_base_category2;
-CREATE EXTERNAL TABLE ods_base_category2(
+CREATE
+EXTERNAL TABLE ods_base_category2(
     `id` STRING COMMENT ' id',
     `name` STRING COMMENT '名称',
     `category1_id` STRING COMMENT '一级品类id'
@@ -95,13 +115,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 ;
 
 
-load data inpath "/offiline_data/gmall/ods/base_category2/2025-03-25" into table ods_base_category2 partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/base_category2/2025-03-24" into table ods_base_category2 partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/base_category2/2025-03-23" into table ods_base_category2 partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/base_category2/2025-03-25" into table ods_base_category2 partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/base_category2/2025-03-24" into table ods_base_category2 partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/base_category2/2025-03-23" into table ods_base_category2 partition (dt="2025-03-23");
 
 -- 5 三级品类表
 DROP TABLE IF EXISTS ods_base_category3;
-CREATE EXTERNAL TABLE ods_base_category3(
+CREATE
+EXTERNAL TABLE ods_base_category3(
     `id` STRING COMMENT ' id',
     `name` STRING COMMENT '名称',
     `category2_id` STRING COMMENT '二级品类id'
@@ -114,13 +138,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 ;
 
 
-load data inpath "/offiline_data/gmall/ods/base_category3/2025-03-25" into table ods_base_category3 partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/base_category3/2025-03-24" into table ods_base_category3 partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/base_category3/2025-03-23" into table ods_base_category3 partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/base_category3/2025-03-25" into table ods_base_category3 partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/base_category3/2025-03-24" into table ods_base_category3 partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/base_category3/2025-03-23" into table ods_base_category3 partition (dt="2025-03-23");
 
 -- 6 编码字典表
 DROP TABLE IF EXISTS ods_base_dic;
-CREATE EXTERNAL TABLE ods_base_dic(
+CREATE
+EXTERNAL TABLE ods_base_dic(
     `dic_code` STRING COMMENT '编号',
     `dic_name` STRING COMMENT '编码名称',
     `parent_code` STRING COMMENT '父编码',
@@ -135,13 +163,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 ;
 
 
-load data inpath "/offiline_data/gmall/ods/base_dic/2025-03-25" into table ods_base_dic partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/base_dic/2025-03-24" into table ods_base_dic partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/base_dic/2025-03-23" into table ods_base_dic partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/base_dic/2025-03-25" into table ods_base_dic partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/base_dic/2025-03-24" into table ods_base_dic partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/base_dic/2025-03-23" into table ods_base_dic partition (dt="2025-03-23");
 
 -- 7 省份表
 DROP TABLE IF EXISTS ods_base_province;
-CREATE EXTERNAL TABLE ods_base_province (
+CREATE
+EXTERNAL TABLE ods_base_province (
     `id` STRING COMMENT '编号',
     `name` STRING COMMENT '省份名称',
     `region_id` STRING COMMENT '地区ID',
@@ -157,13 +189,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 ;
 
 
-load data inpath "/offiline_data/gmall/ods/base_province/2025-03-25" into table ods_base_province partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/base_province/2025-03-24" into table ods_base_province partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/base_province/2025-03-23" into table ods_base_province partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/base_province/2025-03-25" into table ods_base_province partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/base_province/2025-03-24" into table ods_base_province partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/base_province/2025-03-23" into table ods_base_province partition (dt="2025-03-23");
 
 -- 8 地区表
 DROP TABLE IF EXISTS ods_base_region;
-CREATE EXTERNAL TABLE ods_base_region (
+CREATE
+EXTERNAL TABLE ods_base_region (
     `id` STRING COMMENT '编号',
     `region_name` STRING COMMENT '地区名称'
 )  COMMENT '地区表'
@@ -174,13 +210,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     tblproperties ("textfile.Compression=gzip")
 ;
 
-load data inpath "/offiline_data/gmall/ods/base_region/2025-03-25" into table ods_base_region partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/base_region/2025-03-24" into table ods_base_region partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/base_region/2025-03-23" into table ods_base_region partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/base_region/2025-03-25" into table ods_base_region partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/base_region/2025-03-24" into table ods_base_region partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/base_region/2025-03-23" into table ods_base_region partition (dt="2025-03-23");
 
 -- 9 品牌表
 DROP TABLE IF EXISTS ods_base_trademark;
-CREATE EXTERNAL TABLE ods_base_trademark (
+CREATE
+EXTERNAL TABLE ods_base_trademark (
     `id` STRING COMMENT '编号',
     `tm_name` STRING COMMENT '品牌名称'
 )  COMMENT '品牌表'
@@ -190,13 +230,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     LOCATION '/warehouse/gmall/ods/ods_base_trademark/'
     tblproperties ("textfile.Compression=gzip")
 ;
-load data inpath "/offiline_data/gmall/ods/base_trademark/2025-03-25" into table ods_base_trademark partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/base_trademark/2025-03-24" into table ods_base_trademark partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/base_trademark/2025-03-23" into table ods_base_trademark partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/base_trademark/2025-03-25" into table ods_base_trademark partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/base_trademark/2025-03-24" into table ods_base_trademark partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/base_trademark/2025-03-23" into table ods_base_trademark partition (dt="2025-03-23");
 
 -- 10 购物车表
 DROP TABLE IF EXISTS ods_cart_info;
-CREATE EXTERNAL TABLE ods_cart_info(
+CREATE
+EXTERNAL TABLE ods_cart_info(
     `id` STRING COMMENT '编号',
     `user_id` STRING COMMENT '用户id',
     `sku_id` STRING COMMENT 'skuid',
@@ -215,13 +259,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_cart_info/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/cart_info/2025-03-25" into table ods_cart_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/cart_info/2025-03-24" into table ods_cart_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/cart_info/2025-03-23" into table ods_cart_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/cart_info/2025-03-25" into table ods_cart_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/cart_info/2025-03-24" into table ods_cart_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/cart_info/2025-03-23" into table ods_cart_info partition (dt="2025-03-23");
 
 -- 11 评论表
 DROP TABLE IF EXISTS ods_comment_info;
-CREATE EXTERNAL TABLE ods_comment_info(
+CREATE
+EXTERNAL TABLE ods_comment_info(
     `id` STRING COMMENT '编号',
     `user_id` STRING COMMENT '用户ID',
     `sku_id` STRING COMMENT '商品sku',
@@ -235,16 +283,20 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_comment_info/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/comment_info/2025-03-25" into table ods_comment_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/comment_info/2025-03-24" into table ods_comment_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/comment_info/2025-03-23" into table ods_comment_info partition (dt="2025-03-23");
-select * from ods_comment_info;
-
+load
+data inpath "/offiline_data/gmall/ods/comment_info/2025-03-25" into table ods_comment_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/comment_info/2025-03-24" into table ods_comment_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/comment_info/2025-03-23" into table ods_comment_info partition (dt="2025-03-23");
+select *
+from ods_comment_info;
 
 
 -- 12 优惠券信息表
 DROP TABLE IF EXISTS ods_coupon_info;
-CREATE EXTERNAL TABLE ods_coupon_info(
+CREATE
+EXTERNAL TABLE ods_coupon_info(
     `id` STRING COMMENT '购物券编号',
     `coupon_name` STRING COMMENT '购物券名称',
     `coupon_type` STRING COMMENT '购物券类型 1 现金券 2 折扣券 3 满减券 4 满件打折券',
@@ -267,13 +319,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_coupon_info/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/coupon_info/2025-03-25" into table ods_coupon_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/coupon_info/2025-03-24" into table ods_coupon_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/coupon_info/2025-03-23" into table ods_coupon_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/coupon_info/2025-03-25" into table ods_coupon_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/coupon_info/2025-03-24" into table ods_coupon_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/coupon_info/2025-03-23" into table ods_coupon_info partition (dt="2025-03-23");
 
 -- 13 优惠券领用表
 DROP TABLE IF EXISTS ods_coupon_use;
-CREATE EXTERNAL TABLE ods_coupon_use(
+CREATE
+EXTERNAL TABLE ods_coupon_use(
     `id` STRING COMMENT '编号',
     `coupon_id` STRING  COMMENT '优惠券ID',
     `user_id` STRING  COMMENT 'skuid',
@@ -289,13 +345,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_coupon_use/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/coupon_use/2025-03-25" into table ods_coupon_use partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/coupon_use/2025-03-24" into table ods_coupon_use partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/coupon_use/2025-03-23" into table ods_coupon_use partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/coupon_use/2025-03-25" into table ods_coupon_use partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/coupon_use/2025-03-24" into table ods_coupon_use partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/coupon_use/2025-03-23" into table ods_coupon_use partition (dt="2025-03-23");
 
 -- 14 收藏表
 DROP TABLE IF EXISTS ods_favor_info;
-CREATE EXTERNAL TABLE ods_favor_info(
+CREATE
+EXTERNAL TABLE ods_favor_info(
     `id` STRING COMMENT '编号',
     `user_id` STRING COMMENT '用户id',
     `sku_id` STRING COMMENT 'skuid',
@@ -309,13 +369,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_favor_info/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/favor_info/2025-03-25" into table ods_favor_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/favor_info/2025-03-24" into table ods_favor_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/favor_info/2025-03-23" into table ods_favor_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/favor_info/2025-03-25" into table ods_favor_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/favor_info/2025-03-24" into table ods_favor_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/favor_info/2025-03-23" into table ods_favor_info partition (dt="2025-03-23");
 
 -- 15 订单明细表
 DROP TABLE IF EXISTS ods_order_detail;
-CREATE EXTERNAL TABLE ods_order_detail(
+CREATE
+EXTERNAL TABLE ods_order_detail(
     `id` STRING COMMENT '编号',
     `order_id` STRING  COMMENT '订单号',
     `sku_id` STRING COMMENT '商品id',
@@ -334,13 +398,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_order_detail/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/order_detail/2025-03-25" into table ods_order_detail partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/order_detail/2025-03-24" into table ods_order_detail partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/order_detail/2025-03-23" into table ods_order_detail partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/order_detail/2025-03-25" into table ods_order_detail partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/order_detail/2025-03-24" into table ods_order_detail partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/order_detail/2025-03-23" into table ods_order_detail partition (dt="2025-03-23");
 
 -- 16 订单表
-DROP TABLE  ods_order_info;
-CREATE EXTERNAL TABLE ods_order_info (
+DROP TABLE ods_order_info;
+CREATE
+EXTERNAL TABLE ods_order_info (
     `id` STRING COMMENT '订单号',
     `final_amount` DECIMAL(16,2) COMMENT '订单最终金额',
     `order_status` STRING COMMENT '订单状态',
@@ -364,13 +432,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_order_info/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/order_info/2025-03-25" into table ods_order_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/order_info/2025-03-24" into table ods_order_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/order_info/2025-03-23" into table ods_order_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/order_info/2025-03-25" into table ods_order_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/order_info/2025-03-24" into table ods_order_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/order_info/2025-03-23" into table ods_order_info partition (dt="2025-03-23");
 
 -- 17 退单表
 DROP TABLE IF EXISTS ods_order_refund_info;
-CREATE EXTERNAL TABLE ods_order_refund_info(
+CREATE
+EXTERNAL TABLE ods_order_refund_info(
     `id` STRING COMMENT '编号',
     `user_id` STRING COMMENT '用户ID',
     `order_id` STRING COMMENT '订单ID',
@@ -387,13 +459,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_order_refund_info/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/order_refund_info/2025-03-25" into table ods_order_refund_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/order_refund_info/2025-03-24" into table ods_order_refund_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/order_refund_info/2025-03-23" into table ods_order_refund_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/order_refund_info/2025-03-25" into table ods_order_refund_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/order_refund_info/2025-03-24" into table ods_order_refund_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/order_refund_info/2025-03-23" into table ods_order_refund_info partition (dt="2025-03-23");
 
 --18 订单状态日志表
 DROP TABLE IF EXISTS ods_order_status_log;
-CREATE EXTERNAL TABLE ods_order_status_log (
+CREATE
+EXTERNAL TABLE ods_order_status_log (
     `id` STRING COMMENT '编号',
     `order_id` STRING COMMENT '订单ID',
     `order_status` STRING COMMENT '订单状态',
@@ -404,13 +480,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_order_status_log/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/order_status_log/2025-03-25" into table ods_order_status_log partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/order_status_log/2025-03-24" into table ods_order_status_log partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/order_status_log/2025-03-23" into table ods_order_status_log partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/order_status_log/2025-03-25" into table ods_order_status_log partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/order_status_log/2025-03-24" into table ods_order_status_log partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/order_status_log/2025-03-23" into table ods_order_status_log partition (dt="2025-03-23");
 
 -- 19 支付表
 DROP TABLE IF EXISTS ods_payment_info;
-CREATE EXTERNAL TABLE ods_payment_info(
+CREATE
+EXTERNAL TABLE ods_payment_info(
     `id` STRING COMMENT '编号',
     `out_trade_no` STRING COMMENT '对外业务编号',
     `order_id` STRING COMMENT '订单编号',
@@ -428,14 +508,18 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
     stored as textfile
     LOCATION '/warehouse/gmall/ods/ods_payment_info/'
     tblproperties ("textfile.Compression=gzip");
-load data inpath "/offiline_data/gmall/ods/payment_info/2025-03-25" into table ods_payment_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/payment_info/2025-03-24" into table ods_payment_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/payment_info/2025-03-23" into table ods_payment_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/payment_info/2025-03-25" into table ods_payment_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/payment_info/2025-03-24" into table ods_payment_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/payment_info/2025-03-23" into table ods_payment_info partition (dt="2025-03-23");
 
 
 -- 20 商品（SKU）表
 DROP TABLE IF EXISTS ods_sku_info;
-CREATE EXTERNAL TABLE ods_sku_info(
+CREATE
+EXTERNAL TABLE ods_sku_info(
     `id` STRING COMMENT 'skuId',
     `spu_id` STRING COMMENT 'spuid',
     `price` DECIMAL(16,2) COMMENT '价格',
@@ -456,16 +540,20 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 
 
 
-load data inpath "/offiline_data/gmall/ods/sku_info/2025-03-25" into table ods_sku_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/sku_info/2025-03-24" into table ods_sku_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/sku_info/2025-03-23" into table ods_sku_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/sku_info/2025-03-25" into table ods_sku_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/sku_info/2025-03-24" into table ods_sku_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/sku_info/2025-03-23" into table ods_sku_info partition (dt="2025-03-23");
 
 
 
 
 -- 21 商品（SPU）表
 DROP TABLE IF EXISTS ods_spu_info;
-CREATE EXTERNAL TABLE ods_spu_info(
+CREATE
+EXTERNAL TABLE ods_spu_info(
     `id` STRING COMMENT 'spuid',
     `spu_name` STRING COMMENT 'spu名称',
     `category3_id` STRING COMMENT '品类id',
@@ -480,13 +568,17 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 
 
 describe ods_log;
-load data inpath "/offiline_data/gmall/ods/spu_info/2025-03-25" into table ods_spu_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/spu_info/2025-03-24" into table ods_spu_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/spu_info/2025-03-23" into table ods_spu_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/spu_info/2025-03-25" into table ods_spu_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/spu_info/2025-03-24" into table ods_spu_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/spu_info/2025-03-23" into table ods_spu_info partition (dt="2025-03-23");
 
 -- 22 用户表
 DROP TABLE IF EXISTS ods_user_info;
-CREATE EXTERNAL TABLE ods_user_info(
+CREATE
+EXTERNAL TABLE ods_user_info(
     `id` STRING COMMENT '用户id',
     `login_name` STRING COMMENT '用户名称',
     `nick_name` STRING COMMENT '用户昵称',
@@ -507,9 +599,13 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 ;
 
 
+select *
+from ods_user_info;
 
-
-load data inpath "/offiline_data/gmall/ods/user_info/2025-03-25" into table ods_user_info partition (dt="2025-03-25");
-load data inpath "/offiline_data/gmall/ods/user_info/2025-03-24" into table ods_user_info partition (dt="2025-03-24");
-load data inpath "/offiline_data/gmall/ods/user_info/2025-03-23" into table ods_user_info partition (dt="2025-03-23");
+load
+data inpath "/offiline_data/gmall/ods/user_info/2025-03-25" into table ods_user_info partition (dt="2025-03-25");
+load
+data inpath "/offiline_data/gmall/ods/user_info/2025-03-24" into table ods_user_info partition (dt="2025-03-24");
+load
+data inpath "/offiline_data/gmall/ods/user_info/2025-03-23" into table ods_user_info partition (dt="2025-03-23");
 describe ods_user_info;

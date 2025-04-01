@@ -1,5 +1,7 @@
-use offilne;
-set hive.exec.mode.local.auto=true;
+use
+offilne;
+set
+hive.exec.mode.local.auto=true;
 
 --
 drop function split_log;
@@ -11,7 +13,8 @@ create function split_log as 'log_split_and_Interceptor.split_log'
 ---------------日志-----------------
 -- 启动日志表
 DROP TABLE IF EXISTS dwd_start_log;
-CREATE EXTERNAL TABLE dwd_start_log(
+CREATE
+EXTERNAL TABLE dwd_start_log(
     `area_code` STRING COMMENT '地区编码',
     `brand` STRING COMMENT '手机品牌',
     `channel` STRING COMMENT '渠道',
@@ -33,72 +36,73 @@ PARTITIONED BY (`dt` STRING) -- 按照时间创建分区
     LOCATION '/warehouse/gmall/dwd/dwd_start_log/'
     tblproperties ("textfile.Compression=gzip");
 describe dwd_start_log;
-insert  overwrite  table dwd_start_log partition (dt="2025-03-23")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.start.entry'),
-    get_json_object(line,'$.start.loading_time'),
-    get_json_object(line,'$.start.open_ad_id'),
-    get_json_object(line,'$.start.open_ad_ms'),
-    get_json_object(line,'$.start.open_ad_skip_ms'),
-    get_json_object(line,'$.ts')
+insert
+overwrite  table dwd_start_log partition (dt="2025-03-23")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.start.entry'),
+       get_json_object(line, '$.start.loading_time'),
+       get_json_object(line, '$.start.open_ad_id'),
+       get_json_object(line, '$.start.open_ad_ms'),
+       get_json_object(line, '$.start.open_ad_skip_ms'),
+       get_json_object(line, '$.ts')
 from ods_log
-where  get_json_object(line,'$.start') is not null
-  and dt='2025-03-23';
+where get_json_object(line, '$.start') is not null
+  and dt = '2025-03-23';
 
-insert  overwrite  table dwd_start_log partition (dt="2025-03-24")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.start.entry'),
-    get_json_object(line,'$.start.loading_time'),
-    get_json_object(line,'$.start.open_ad_id'),
-    get_json_object(line,'$.start.open_ad_ms'),
-    get_json_object(line,'$.start.open_ad_skip_ms'),
-    get_json_object(line,'$.ts')
+insert
+overwrite  table dwd_start_log partition (dt="2025-03-24")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.start.entry'),
+       get_json_object(line, '$.start.loading_time'),
+       get_json_object(line, '$.start.open_ad_id'),
+       get_json_object(line, '$.start.open_ad_ms'),
+       get_json_object(line, '$.start.open_ad_skip_ms'),
+       get_json_object(line, '$.ts')
 from ods_log
-where  get_json_object(line,'$.start') is not null
-  and dt='2025-03-24';
-insert  overwrite  table dwd_start_log partition (dt="2025-03-25")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.start.entry'),
-    get_json_object(line,'$.start.loading_time'),
-    get_json_object(line,'$.start.open_ad_id'),
-    get_json_object(line,'$.start.open_ad_ms'),
-    get_json_object(line,'$.start.open_ad_skip_ms'),
-    get_json_object(line,'$.ts')
+where get_json_object(line, '$.start') is not null
+  and dt = '2025-03-24';
+insert
+overwrite  table dwd_start_log partition (dt="2025-03-25")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.start.entry'),
+       get_json_object(line, '$.start.loading_time'),
+       get_json_object(line, '$.start.open_ad_id'),
+       get_json_object(line, '$.start.open_ad_ms'),
+       get_json_object(line, '$.start.open_ad_skip_ms'),
+       get_json_object(line, '$.ts')
 from ods_log
-where  get_json_object(line,'$.start') is not null
-  and dt='2025-03-25';
+where get_json_object(line, '$.start') is not null
+  and dt = '2025-03-25';
 
 
 -- 页面日志表
 DROP TABLE IF EXISTS dwd_page_log;
-CREATE EXTERNAL TABLE dwd_page_log(
+CREATE
+EXTERNAL TABLE dwd_page_log(
     `area_code` STRING COMMENT '地区编码',
     `brand` STRING COMMENT '手机品牌',
     `channel` STRING COMMENT '渠道',
@@ -121,75 +125,76 @@ PARTITIONED BY (`dt` STRING)
     LOCATION '/warehouse/gmall/dwd/dwd_page_log/'
     tblproperties ("textfile.Compression=gzip");
 describe dwd_page_log;
-insert  overwrite  table dwd_page_log partition (dt="2025-03-23")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.ts')
+insert
+overwrite  table dwd_page_log partition (dt="2025-03-23")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.ts')
 from ods_log
-where dt='2025-03-23'
-  and get_json_object(line,'$.page') is not null;
+where dt = '2025-03-23'
+  and get_json_object(line, '$.page') is not null;
 
-insert  overwrite  table dwd_page_log partition (dt="2025-03-24")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.ts')
+insert
+overwrite  table dwd_page_log partition (dt="2025-03-24")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.ts')
 from ods_log
-where dt='2025-03-24'
-  and get_json_object(line,'$.page') is not null;
+where dt = '2025-03-24'
+  and get_json_object(line, '$.page') is not null;
 
-insert  overwrite  table dwd_page_log partition (dt="2025-03-25")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.ts')
+insert
+overwrite  table dwd_page_log partition (dt="2025-03-25")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.ts')
 from ods_log
-where dt='2025-03-25'
-  and get_json_object(line,'$.page') is not null;
+where dt = '2025-03-25'
+  and get_json_object(line, '$.page') is not null;
 
 -- 动作日志表
 DROP TABLE IF EXISTS dwd_action_log;
-CREATE EXTERNAL TABLE dwd_action_log(
+CREATE
+EXTERNAL TABLE dwd_action_log(
     `area_code` STRING COMMENT '地区编码',
     `brand` STRING COMMENT '手机品牌',
     `channel` STRING COMMENT '渠道',
@@ -218,86 +223,87 @@ PARTITIONED BY (`dt` STRING)
 
 
 
-insert  overwrite  table dwd_action_log partition (dt="2025-03-23")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(action,'$.action_id'),
-    get_json_object(action,'$.item'),
-    get_json_object(action,'$.item_type'),
-    get_json_object(action,'$.ts')
-from ods_log line
-    lateral view split_log (get_json_object(line,'$.actions')) tmp as action
+insert
+overwrite  table dwd_action_log partition (dt="2025-03-23")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(action,'$.action_id'),
+       get_json_object(action,'$.item'),
+       get_json_object(action,'$.item_type'),
+       get_json_object(action,'$.ts')
+from ods_log line lateral view split_log (get_json_object(line,'$.actions')) tmp as action
 where dt='2025-03-23'
-  and get_json_object(line,'$.actions') is not null;
+  and get_json_object(line
+    , '$.actions') is not null;
 
-insert  overwrite  table dwd_action_log partition (dt="2025-03-24")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(action,'$.action_id'),
-    get_json_object(action,'$.item'),
-    get_json_object(action,'$.item_type'),
-    get_json_object(action,'$.ts')
-from ods_log line
-    lateral view split_log (get_json_object(line,'$.actions')) tmp as action
+insert
+overwrite  table dwd_action_log partition (dt="2025-03-24")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(action,'$.action_id'),
+       get_json_object(action,'$.item'),
+       get_json_object(action,'$.item_type'),
+       get_json_object(action,'$.ts')
+from ods_log line lateral view split_log (get_json_object(line,'$.actions')) tmp as action
 where dt='2025-03-24'
-  and get_json_object(line,'$.actions') is not null;
-insert  overwrite  table dwd_action_log partition (dt="2025-03-25")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(action,'$.action_id'),
-    get_json_object(action,'$.item'),
-    get_json_object(action,'$.item_type'),
-    get_json_object(action,'$.ts')
-from ods_log line
-    lateral view split_log (get_json_object(line,'$.actions')) tmp as action
+  and get_json_object(line
+    , '$.actions') is not null;
+insert
+overwrite  table dwd_action_log partition (dt="2025-03-25")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(action,'$.action_id'),
+       get_json_object(action,'$.item'),
+       get_json_object(action,'$.item_type'),
+       get_json_object(action,'$.ts')
+from ods_log line lateral view split_log (get_json_object(line,'$.actions')) tmp as action
 where dt='2025-03-25'
-  and get_json_object(line,'$.actions') is not null;
+  and get_json_object(line
+    , '$.actions') is not null;
 
 -- 曝光日志表
 DROP TABLE IF EXISTS dwd_display_log;
-CREATE EXTERNAL TABLE dwd_display_log(
+CREATE
+EXTERNAL TABLE dwd_display_log(
     `area_code` STRING COMMENT '地区编码',
     `brand` STRING COMMENT '手机品牌',
     `channel` STRING COMMENT '渠道',
@@ -327,93 +333,95 @@ PARTITIONED BY (`dt` STRING)
 
 
 
-insert  overwrite  table dwd_display_log partition (dt="2025-03-23")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.ts'),
-    get_json_object(display,'$.display_type'),
-    get_json_object(display,'$.item'),
-    get_json_object(display,'$.item_type'),
-    get_json_object(display,'$.order'),
-    get_json_object(display,'$.pos_id')
-from ods_log  line lateral view split_log(get_json_object(line,'$.displays')) tmp as display
+insert
+overwrite  table dwd_display_log partition (dt="2025-03-23")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.ts'),
+       get_json_object(display, '$.display_type'),
+       get_json_object(display, '$.item'),
+       get_json_object(display, '$.item_type'),
+       get_json_object(display, '$.order'),
+       get_json_object(display, '$.pos_id')
+from ods_log line lateral view split_log(get_json_object(line,'$.displays')) tmp as display
 where dt='2025-03-23'
-  and get_json_object(line,'$.displays') is not null;
+  and get_json_object(line
+    , '$.displays') is not null;
 
 
-insert  overwrite  table dwd_display_log partition (dt="2025-03-24")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.ts'),
-    get_json_object(display,'$.display_type'),
-    get_json_object(display,'$.item'),
-    get_json_object(display,'$.item_type'),
-    get_json_object(display,'$.order'),
-    get_json_object(display,'$.pos_id')
-from ods_log  line lateral view split_log(get_json_object(line,'$.displays')) tmp as display
+insert
+overwrite  table dwd_display_log partition (dt="2025-03-24")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.ts'),
+       get_json_object(display, '$.display_type'),
+       get_json_object(display, '$.item'),
+       get_json_object(display, '$.item_type'),
+       get_json_object(display, '$.order'),
+       get_json_object(display, '$.pos_id')
+from ods_log line lateral view split_log(get_json_object(line,'$.displays')) tmp as display
 where dt='2025-03-24'
-  and get_json_object(line,'$.displays') is not null;
-insert  overwrite  table dwd_display_log partition (dt="2025-03-25")
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.during_time'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.ts'),
-    get_json_object(display,'$.display_type'),
-    get_json_object(display,'$.item'),
-    get_json_object(display,'$.item_type'),
-    get_json_object(display,'$.order'),
-    get_json_object(display,'$.pos_id')
-from ods_log  line lateral view split_log(get_json_object(line,'$.displays')) tmp as display
+  and get_json_object(line
+    , '$.displays') is not null;
+insert
+overwrite  table dwd_display_log partition (dt="2025-03-25")
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.during_time'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.ts'),
+       get_json_object(display, '$.display_type'),
+       get_json_object(display, '$.item'),
+       get_json_object(display, '$.item_type'),
+       get_json_object(display, '$.order'),
+       get_json_object(display, '$.pos_id')
+from ods_log line lateral view split_log(get_json_object(line,'$.displays')) tmp as display
 where dt='2025-03-25'
-  and get_json_object(line,'$.displays') is not null;
-
-
+  and get_json_object(line
+    , '$.displays') is not null;
 
 
 -- 错误日志表
 DROP TABLE IF EXISTS dwd_error_log;
-CREATE EXTERNAL TABLE dwd_error_log(
+CREATE
+EXTERNAL TABLE dwd_error_log(
     `area_code` STRING COMMENT '地区编码',
     `brand` STRING COMMENT '手机品牌',
     `channel` STRING COMMENT '渠道',
@@ -447,101 +455,102 @@ PARTITIONED BY (`dt` STRING)
 
 describe dwd_error_log;
 
-insert overwrite table dwd_error_log partition(dt='2025-03-23')
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.start.entry'),
-    get_json_object(line,'$.start.loading_time'),
-    get_json_object(line,'$.start.open_ad_id'),
-    get_json_object(line,'$.start.open_ad_ms'),
-    get_json_object(line,'$.start.open_ad_skip_ms'),
-    get_json_object(line,'$.actions'),
-    get_json_object(line,'$.displays'),
-    get_json_object(line,'$.ts'),
-    get_json_object(line,'$.err.error_code'),
-    get_json_object(line,'$.err.msg')
+insert
+overwrite table dwd_error_log partition(dt='2025-03-23')
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.start.entry'),
+       get_json_object(line, '$.start.loading_time'),
+       get_json_object(line, '$.start.open_ad_id'),
+       get_json_object(line, '$.start.open_ad_ms'),
+       get_json_object(line, '$.start.open_ad_skip_ms'),
+       get_json_object(line, '$.actions'),
+       get_json_object(line, '$.displays'),
+       get_json_object(line, '$.ts'),
+       get_json_object(line, '$.err.error_code'),
+       get_json_object(line, '$.err.msg')
 from ods_log
-where dt='2025-03-23'
-  and get_json_object(line,'$.err') is not null;
-insert overwrite table dwd_error_log partition(dt='2025-03-24')
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.start.entry'),
-    get_json_object(line,'$.start.loading_time'),
-    get_json_object(line,'$.start.open_ad_id'),
-    get_json_object(line,'$.start.open_ad_ms'),
-    get_json_object(line,'$.start.open_ad_skip_ms'),
-    get_json_object(line,'$.actions'),
-    get_json_object(line,'$.displays'),
-    get_json_object(line,'$.ts'),
-    get_json_object(line,'$.err.error_code'),
-    get_json_object(line,'$.err.msg')
+where dt = '2025-03-23'
+  and get_json_object(line, '$.err') is not null;
+insert
+overwrite table dwd_error_log partition(dt='2025-03-24')
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.start.entry'),
+       get_json_object(line, '$.start.loading_time'),
+       get_json_object(line, '$.start.open_ad_id'),
+       get_json_object(line, '$.start.open_ad_ms'),
+       get_json_object(line, '$.start.open_ad_skip_ms'),
+       get_json_object(line, '$.actions'),
+       get_json_object(line, '$.displays'),
+       get_json_object(line, '$.ts'),
+       get_json_object(line, '$.err.error_code'),
+       get_json_object(line, '$.err.msg')
 from ods_log
-where dt='2025-03-24'
-  and get_json_object(line,'$.err') is not null;
-insert overwrite table dwd_error_log partition(dt='2025-03-25')
-select
-    get_json_object(line,'$.common.ar'),
-    get_json_object(line,'$.common.ba'),
-    get_json_object(line,'$.common.ch'),
-    get_json_object(line,'$.common.is_new'),
-    get_json_object(line,'$.common.md'),
-    get_json_object(line,'$.common.mid'),
-    get_json_object(line,'$.common.os'),
-    get_json_object(line,'$.common.uid'),
-    get_json_object(line,'$.common.vc'),
-    get_json_object(line,'$.page.item'),
-    get_json_object(line,'$.page.item_type'),
-    get_json_object(line,'$.page.last_page_id'),
-    get_json_object(line,'$.page.page_id'),
-    get_json_object(line,'$.page.source_type'),
-    get_json_object(line,'$.start.entry'),
-    get_json_object(line,'$.start.loading_time'),
-    get_json_object(line,'$.start.open_ad_id'),
-    get_json_object(line,'$.start.open_ad_ms'),
-    get_json_object(line,'$.start.open_ad_skip_ms'),
-    get_json_object(line,'$.actions'),
-    get_json_object(line,'$.displays'),
-    get_json_object(line,'$.ts'),
-    get_json_object(line,'$.err.error_code'),
-    get_json_object(line,'$.err.msg')
+where dt = '2025-03-24'
+  and get_json_object(line, '$.err') is not null;
+insert
+overwrite table dwd_error_log partition(dt='2025-03-25')
+select get_json_object(line, '$.common.ar'),
+       get_json_object(line, '$.common.ba'),
+       get_json_object(line, '$.common.ch'),
+       get_json_object(line, '$.common.is_new'),
+       get_json_object(line, '$.common.md'),
+       get_json_object(line, '$.common.mid'),
+       get_json_object(line, '$.common.os'),
+       get_json_object(line, '$.common.uid'),
+       get_json_object(line, '$.common.vc'),
+       get_json_object(line, '$.page.item'),
+       get_json_object(line, '$.page.item_type'),
+       get_json_object(line, '$.page.last_page_id'),
+       get_json_object(line, '$.page.page_id'),
+       get_json_object(line, '$.page.source_type'),
+       get_json_object(line, '$.start.entry'),
+       get_json_object(line, '$.start.loading_time'),
+       get_json_object(line, '$.start.open_ad_id'),
+       get_json_object(line, '$.start.open_ad_ms'),
+       get_json_object(line, '$.start.open_ad_skip_ms'),
+       get_json_object(line, '$.actions'),
+       get_json_object(line, '$.displays'),
+       get_json_object(line, '$.ts'),
+       get_json_object(line, '$.err.error_code'),
+       get_json_object(line, '$.err.msg')
 from ods_log
-where dt='2025-03-25'
-  and get_json_object(line,'$.err') is not null;
+where dt = '2025-03-25'
+  and get_json_object(line, '$.err') is not null;
 
-select * from dwd_error_log;
-
+select *
+from dwd_error_log;
 
 
 
 DROP TABLE IF EXISTS dwd_comment_info;
-CREATE EXTERNAL TABLE dwd_comment_info(
+CREATE
+EXTERNAL TABLE dwd_comment_info(
     `id` STRING COMMENT '编号',
     `user_id` STRING COMMENT '用户ID',
     `sku_id` STRING COMMENT '商品sku',
@@ -558,45 +567,47 @@ describe dwd_comment_info;
 
 
 
+select *
+from dwd_comment_info dci
+         join dwd_order_info doi
+              on dci.order_id = doi.id;
 
-select * from dwd_comment_info dci
-                  join dwd_order_info  doi
-                       on dci.order_id=doi.id;
-
-insert overwrite table  dwd_comment_info partition (dt='2025-03-23')
-select
-    `id` ,
-    `user_id` ,
-    `sku_id`,
-    `order_id` ,
-    `appraise` ,
-    `create_time`
-from ods_comment_info where dt='2025-03-23';
-insert overwrite table  dwd_comment_info partition (dt='2025-03-24')
-select
-    `id` ,
-    `user_id` ,
-    `sku_id`,
-    `order_id` ,
-    `appraise` ,
-    `create_time`
-from ods_comment_info where dt='2025-03-24';
-insert overwrite table  dwd_comment_info partition (dt='2025-03-25')
-select
-    `id` ,
-    `user_id` ,
-    `sku_id`,
-    `order_id` ,
-    `appraise` ,
-    `create_time`
-from ods_comment_info where dt='2025-03-25';
-
-
+insert
+overwrite table  dwd_comment_info partition (dt='2025-03-23')
+select `id`,
+       `user_id`,
+       `sku_id`,
+       `order_id`,
+       `appraise`,
+       `create_time`
+from ods_comment_info
+where dt = '2025-03-23';
+insert
+overwrite table  dwd_comment_info partition (dt='2025-03-24')
+select `id`,
+       `user_id`,
+       `sku_id`,
+       `order_id`,
+       `appraise`,
+       `create_time`
+from ods_comment_info
+where dt = '2025-03-24';
+insert
+overwrite table  dwd_comment_info partition (dt='2025-03-25')
+select `id`,
+       `user_id`,
+       `sku_id`,
+       `order_id`,
+       `appraise`,
+       `create_time`
+from ods_comment_info
+where dt = '2025-03-25';
 
 
 
 drop table dwd_order_detail;
-CREATE EXTERNAL TABLE dwd_order_detail (
+CREATE
+EXTERNAL TABLE dwd_order_detail (
     `id` STRING COMMENT '订单编号',
     `order_id` STRING COMMENT '订单号',
     `user_id` STRING COMMENT '用户id',
@@ -613,49 +624,53 @@ describe dwd_order_detail;
 
 
 
-insert overwrite table dwd_order_detail partition (dt='2025-03-23')
-select
-    ood.id,
-    ooi.id,
-    ooi.user_id,
-    ood.sku_id,
-    ooi.province_id,
-    ooi.create_time,
-    ood.sku_num
-from ods_order_info ooi join ods_order_detail  ood
-                             on  ooi.id =ood.order_id
-where ooi.dt='2025-03-23';
+insert
+overwrite table dwd_order_detail partition (dt='2025-03-23')
+select ood.id,
+       ooi.id,
+       ooi.user_id,
+       ood.sku_id,
+       ooi.province_id,
+       ooi.create_time,
+       ood.sku_num
+from ods_order_info ooi
+         join ods_order_detail ood
+              on ooi.id = ood.order_id
+where ooi.dt = '2025-03-23';
 
 
-insert overwrite table dwd_order_detail partition (dt='2025-03-24')
-select
-    ood.id,
-    ooi.id,
-    ooi.user_id,
-    ood.sku_id,
-    ooi.province_id,
-    ooi.create_time,
-    ood.sku_num
-from ods_order_info ooi join ods_order_detail  ood
-                             on  ooi.id =ood.order_id
-where ooi.dt='2025-03-24';
-insert overwrite table dwd_order_detail partition (dt='2025-03-25')
-select
-    ood.id,
-    ooi.id,
-    ooi.user_id,
-    ood.sku_id,
-    ooi.province_id,
-    ooi.create_time,
-    ood.sku_num
-from ods_order_info ooi join ods_order_detail  ood
-                             on  ooi.id =ood.order_id
-where ooi.dt='2025-03-25';
+insert
+overwrite table dwd_order_detail partition (dt='2025-03-24')
+select ood.id,
+       ooi.id,
+       ooi.user_id,
+       ood.sku_id,
+       ooi.province_id,
+       ooi.create_time,
+       ood.sku_num
+from ods_order_info ooi
+         join ods_order_detail ood
+              on ooi.id = ood.order_id
+where ooi.dt = '2025-03-24';
+insert
+overwrite table dwd_order_detail partition (dt='2025-03-25')
+select ood.id,
+       ooi.id,
+       ooi.user_id,
+       ood.sku_id,
+       ooi.province_id,
+       ooi.create_time,
+       ood.sku_num
+from ods_order_info ooi
+         join ods_order_detail ood
+              on ooi.id = ood.order_id
+where ooi.dt = '2025-03-25';
 
 
 
 drop table dwd_order_info;
-CREATE EXTERNAL TABLE dwd_order_info (
+CREATE
+EXTERNAL TABLE dwd_order_info (
                                          `id` STRING COMMENT '订单号',
                                          `final_amount` DECIMAL(16,2) COMMENT '订单最终金额',
                                          `order_status` STRING COMMENT '订单状态',
@@ -681,71 +696,75 @@ CREATE EXTERNAL TABLE dwd_order_info (
     tblproperties ("textfile.Compression=gzip");
 
 
-insert overwrite table dwd_order_info partition (dt='2025-03-23')
-select
-    `id`,
-    `final_amount` ,
-    `order_status` ,
-    `user_id` ,
-    `payment_way` ,
-    `delivery_address` ,
-    `out_trade_no`,
-    `create_time` ,
-    `operate_time` ,
-    `expire_time` ,
-    `tracking_no` ,
-    `province_id` ,
-    `activity_reduce_amount` ,
-    `coupon_reduce_amount` ,
-    `original_amount`,
-    `feight_fee`,
-    `feight_fee_reduce`
-from  ods_order_info where dt='2025-03-23';
-insert overwrite table dwd_order_info partition (dt='2025-03-24')
-select
-    `id`,
-    `final_amount` ,
-    `order_status` ,
-    `user_id` ,
-    `payment_way` ,
-    `delivery_address` ,
-    `out_trade_no`,
-    `create_time` ,
-    `operate_time` ,
-    `expire_time` ,
-    `tracking_no` ,
-    `province_id` ,
-    `activity_reduce_amount` ,
-    `coupon_reduce_amount` ,
-    `original_amount`,
-    `feight_fee`,
-    `feight_fee_reduce`
-from  ods_order_info where dt='2025-03-24';
-insert overwrite table dwd_order_info partition (dt='2025-03-25')
-select
-    `id`,
-    `final_amount` ,
-    `order_status` ,
-    `user_id` ,
-    `payment_way` ,
-    `delivery_address` ,
-    `out_trade_no`,
-    `create_time` ,
-    `operate_time` ,
-    `expire_time` ,
-    `tracking_no` ,
-    `province_id` ,
-    `activity_reduce_amount` ,
-    `coupon_reduce_amount` ,
-    `original_amount`,
-    `feight_fee`,
-    `feight_fee_reduce`
-from  ods_order_info where dt='2025-03-25';
+insert
+overwrite table dwd_order_info partition (dt='2025-03-23')
+select `id`,
+       `final_amount`,
+       `order_status`,
+       `user_id`,
+       `payment_way`,
+       `delivery_address`,
+       `out_trade_no`,
+       `create_time`,
+       `operate_time`,
+       `expire_time`,
+       `tracking_no`,
+       `province_id`,
+       `activity_reduce_amount`,
+       `coupon_reduce_amount`,
+       `original_amount`,
+       `feight_fee`,
+       `feight_fee_reduce`
+from ods_order_info
+where dt = '2025-03-23';
+insert
+overwrite table dwd_order_info partition (dt='2025-03-24')
+select `id`,
+       `final_amount`,
+       `order_status`,
+       `user_id`,
+       `payment_way`,
+       `delivery_address`,
+       `out_trade_no`,
+       `create_time`,
+       `operate_time`,
+       `expire_time`,
+       `tracking_no`,
+       `province_id`,
+       `activity_reduce_amount`,
+       `coupon_reduce_amount`,
+       `original_amount`,
+       `feight_fee`,
+       `feight_fee_reduce`
+from ods_order_info
+where dt = '2025-03-24';
+insert
+overwrite table dwd_order_info partition (dt='2025-03-25')
+select `id`,
+       `final_amount`,
+       `order_status`,
+       `user_id`,
+       `payment_way`,
+       `delivery_address`,
+       `out_trade_no`,
+       `create_time`,
+       `operate_time`,
+       `expire_time`,
+       `tracking_no`,
+       `province_id`,
+       `activity_reduce_amount`,
+       `coupon_reduce_amount`,
+       `original_amount`,
+       `feight_fee`,
+       `feight_fee_reduce`
+from ods_order_info
+where dt = '2025-03-25';
 
 
 
 drop table dwd_sku_info;
-CREATE EXTERNAL TABLE dwd_sku_info(
+CREATE
+EXTERNAL TABLE dwd_sku_info(
                                       `id` STRING COMMENT 'skuId',
                                       `spu_id` STRING COMMENT 'spuid',
                                       `price` DECIMAL(16,2) COMMENT '价格',
@@ -763,51 +782,55 @@ CREATE EXTERNAL TABLE dwd_sku_info(
     LOCATION '/warehouse/gmall/dwd/dwd_sku_info/'
     tblproperties ("textfile.Compression=gzip")
 ;
-insert overwrite table dwd_sku_info partition (dt='2025-03-23')
-select
-    `id` ,
-    `spu_id` ,
-    `price` ,
-    `sku_name` ,
-    `sku_desc`,
-    `weight` ,
-    `tm_id` ,
-    `category3_id`,
-    `is_sale` ,
-    `create_time`
-from ods_sku_info where dt='2025-03-23';
-insert overwrite table dwd_sku_info partition (dt='2025-03-24')
-select
-    `id` ,
-    `spu_id` ,
-    `price` ,
-    `sku_name` ,
-    `sku_desc`,
-    `weight` ,
-    `tm_id` ,
-    `category3_id`,
-    `is_sale` ,
-    `create_time`
-from ods_sku_info where dt='2025-03-24';
+insert
+overwrite table dwd_sku_info partition (dt='2025-03-23')
+select `id`,
+       `spu_id`,
+       `price`,
+       `sku_name`,
+       `sku_desc`,
+       `weight`,
+       `tm_id`,
+       `category3_id`,
+       `is_sale`,
+       `create_time`
+from ods_sku_info
+where dt = '2025-03-23';
+insert
+overwrite table dwd_sku_info partition (dt='2025-03-24')
+select `id`,
+       `spu_id`,
+       `price`,
+       `sku_name`,
+       `sku_desc`,
+       `weight`,
+       `tm_id`,
+       `category3_id`,
+       `is_sale`,
+       `create_time`
+from ods_sku_info
+where dt = '2025-03-24';
 describe dwd_page_log;
 
-insert overwrite table dwd_sku_info partition (dt='2025-03-25')
-select
-    `id` ,
-    `spu_id` ,
-    `price` ,
-    `sku_name` ,
-    `sku_desc`,
-    `weight` ,
-    `tm_id` ,
-    `category3_id`,
-    `is_sale` ,
-    `create_time`
-from ods_sku_info where dt='2025-03-25';
+insert
+overwrite table dwd_sku_info partition (dt='2025-03-25')
+select `id`,
+       `spu_id`,
+       `price`,
+       `sku_name`,
+       `sku_desc`,
+       `weight`,
+       `tm_id`,
+       `category3_id`,
+       `is_sale`,
+       `create_time`
+from ods_sku_info
+where dt = '2025-03-25';
 
 
 drop table dwd_user_info;
-CREATE EXTERNAL TABLE dwd_user_info(
+CREATE
+EXTERNAL TABLE dwd_user_info(
                                        `id` STRING COMMENT '用户id',
                                        `login_name` STRING COMMENT '用户名称',
                                        `nick_name` STRING COMMENT '用户昵称',
@@ -827,46 +850,49 @@ CREATE EXTERNAL TABLE dwd_user_info(
     tblproperties ("textfile.Compression=gzip");
 describe dwd_user_info;
 
-insert overwrite table dwd_user_info partition (dt='2025-03-23')
-select
-    `id` ,
-    `login_name` ,
-    `nick_name`,
-    `name`,
-    `phone_num` ,
-    `email` ,
-    `user_level` ,
-    `birthday` ,
-    `gender` ,
-    `create_time` ,
-    `operate_time`
-from ods_user_info where dt='2025-03-23';
-insert overwrite table dwd_user_info partition (dt='2025-03-24')
-select
-    `id` ,
-    `login_name` ,
-    `nick_name`,
-    `name`,
-    `phone_num` ,
-    `email` ,
-    `user_level` ,
-    `birthday` ,
-    `gender` ,
-    `create_time` ,
-    `operate_time`
-from ods_user_info where dt='2025-03-24';
-insert overwrite table dwd_user_info partition (dt='2025-03-25')
-select
-    `id` ,
-    `login_name` ,
-    `nick_name`,
-    `name`,
-    `phone_num` ,
-    `email` ,
-    `user_level` ,
-    `birthday` ,
-    `gender` ,
-    `create_time` ,
-    `operate_time`
-from ods_user_info where dt='2025-03-25';
+insert
+overwrite table dwd_user_info partition (dt='2025-03-23')
+select `id`,
+       `login_name`,
+       `nick_name`,
+       `name`,
+       `phone_num`,
+       `email`,
+       `user_level`,
+       `birthday`,
+       `gender`,
+       `create_time`,
+       `operate_time`
+from ods_user_info
+where dt = '2025-03-23';
+insert
+overwrite table dwd_user_info partition (dt='2025-03-24')
+select `id`,
+       `login_name`,
+       `nick_name`,
+       `name`,
+       `phone_num`,
+       `email`,
+       `user_level`,
+       `birthday`,
+       `gender`,
+       `create_time`,
+       `operate_time`
+from ods_user_info
+where dt = '2025-03-24';
+insert
+overwrite table dwd_user_info partition (dt='2025-03-25')
+select `id`,
+       `login_name`,
+       `nick_name`,
+       `name`,
+       `phone_num`,
+       `email`,
+       `user_level`,
+       `birthday`,
+       `gender`,
+       `create_time`,
+       `operate_time`
+from ods_user_info
+where dt = '2025-03-25';
 describe ods_user_info;
